@@ -4,53 +4,45 @@ using namespace std;
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        int n = grid.size();
-        int m = grid[0].size();
-
-        queue<pair<pair<int, int>, int>> q; // {{row, col}, time}
-
-        // Add all initially rotten oranges to the queue
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == 2) {
+        int m=grid.size();
+        int n=grid[0].size();
+        int cnt=0, total=0;
+        queue<pair<pair<int, int>, int>> q;
+        vector<vector<int>> vis(m, vector<int>(n,0));
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(grid[i][j]==2) {
                     q.push({{i, j}, 0});
+                    vis[i][j]=2;
+                }
+                if(grid[i][j]==1) {
+                    total++;
                 }
             }
         }
 
-        int tm = 0;
-        int drow[] = {-1, 0, 1, 0};
-        int dcol[] = {0, 1, 0, -1};
+        int row[] = {-1,0,1,0};
+        int col[] = {0, -1, 0 , 1};
+        int ans=0;
+        while(!q.empty()) {
+            auto it = q.front();q.pop();
+            int x=it.first.first;
+            int y=it.first.second;
+            int t=it.second;
+            ans=max(t,ans);
 
-        // BFS traversal
-        while (!q.empty()) {
-            int r = q.front().first.first;
-            int c = q.front().first.second;
-            int t = q.front().second;
-            q.pop();
-            tm = max(tm, t);
-
-            // Check all 4 possible directions
-            for (int i = 0; i < 4; i++) {
-                int nrow = r + drow[i];
-                int ncol = c + dcol[i];
-                if (nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && grid[nrow][ncol] == 1) {
-                    // Rot the fresh orange
-                    grid[nrow][ncol] = 2;
-                    q.push({{nrow, ncol}, t + 1});
+            for(int i=0;i<4;i++) {
+                int row1=row[i]+x;
+                int col1=col[i]+y;
+                if(row1>=0 && row1<m && col1>=0 && col1<n && vis[row1][col1]==0 && grid[row1][col1]==1) {
+                    q.push({{row1, col1}, t+1});
+                    vis[row1][col1]=2;
+                    cnt++;
                 }
             }
         }
 
-        // Check if any fresh orange remains
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == 1) {
-                    return -1; // Impossible to rot all oranges
-                }
-            }
-        }
-
-        return tm;
+        if(cnt != total) return -1;
+        return ans;
     }
 };
