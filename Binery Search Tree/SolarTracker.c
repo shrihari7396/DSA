@@ -39,4 +39,4 @@ void loop() {
         vertical.write(servoh);
 
         delay(delayTime);
-    }
+}
