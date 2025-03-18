@@ -52,3 +52,7 @@ class Solution {
             return dist;
         }
   };
+
+int main(int argc, char** argv) {
+    return 0;
+}
