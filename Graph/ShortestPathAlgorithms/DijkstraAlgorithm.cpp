@@ -1,48 +1,48 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
 // User Function Template
-    class Solution {
-        public:
-        vector<int> dijkstra(vector<vector<pair<int, int>>> &adj, int src) {
-            priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int,int>>> pq;
-            vector<int> parent(adj.size()+1), dist(adj.size(),INT_MAX);
+class Solution {
+    public:
+    vector<int> dijkstra(vector<vector<pair<int, int>>> &adj, int src) {
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int,int>>> pq;
+        vector<int> parent(adj.size()+1), dist(adj.size(),INT_MAX);
 
-            for(int i=0;i<adj.size()+1;i++) {
-                parent[i]=i;
-            }
-    
-            pq.push({0,1});
-            dist[1]=0;
-            
-            while(!pq.empty()) {
-                    auto it = pq.top();
-                    int node = it.second;
-                    int wt = it.first;
-                    pq.pop();
-
-                    for(auto it : adj[node]) {
-                        int adjNode = it.first;  // Adjacent node
-                        int edW = it.second;     // Edge weight
-
-                        if(edW+wt < dist[adjNode]) {
-                            dist[adjNode]=wt+edW;
-                            pq.push({dist[node], adjNode});
-                            parent[adjNode]=node;
-                        }
-                    }
-                }
-
-                if(dist[adj.size()]==INT_MAX) return {-1};
-                vector<int> path;
-                int node = adj.size();
-                while (parent[node]!=node)
-                {
-                    path.emplace_back(node);
-                    node = parent[node];
-                }
-                return path;
+        for(int i=0;i<adj.size()+1;i++) {
+            parent[i]=i;
         }
+    
+        pq.push({0,1});
+        dist[1]=0;
+            
+        while(!pq.empty()) {
+            auto it = pq.top();
+            int node = it.second;
+            int wt = it.first;
+            pq.pop();
+
+            for(auto it : adj[node]) {
+                int adjNode = it.first;  // Adjacent node
+                int edW = it.second;     // Edge weight
+
+                if(edW+wt < dist[adjNode]) {
+                dist[adjNode]=wt+edW;
+                pq.push({dist[node], adjNode});
+                parent[adjNode]=node;
+            }
+        }
+    }
+
+        if(dist[adj.size()]==INT_MAX) return {-1};
+        vector<int> path;
+        int node = adj.size();
+        while (parent[node]!=node)
+        {
+                path.emplace_back(node);
+            node = parent[node];
+        }
+        return path;
+    }
 
         vector<int> dis(vector<vector<pair<int,int>>>& adj) {
             priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
@@ -78,6 +78,8 @@ using namespace std;
         }
     };
 
-int main(int argc) {
+int main(int argc, char** argv) {
 
+
+    return 0;
 }
