@@ -45,7 +45,7 @@ int minCost(vector<int>& height) {
     return dp[height.size()-1];
 }
 
-// Highly optimization as their only required previous two variables;
+// Highly optimization as their only required previous two variables;   
 
 int main(int argc, char** argv) {
 

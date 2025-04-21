@@ -22,9 +22,13 @@ public:
     vector<int> dfsTraversal(int v, vector<int> adj[]) {
         vector<int> vis(v, 0);    // Visited array initialized to 0
         vector<int> dfs;          // To store the DFS traversal
-        
-        DFS(0, vis, adj, dfs);    // Start DFS from node 0
-        
+
+        for(int i=0;i<v;i++) {    // Start DFS from node 0
+            if(!vis[i]) {
+                DFS(i, vis, adj, dfs);
+            }
+        }
+
         return dfs;               // Return the traversal result
     }
 };
