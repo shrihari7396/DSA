@@ -7,8 +7,8 @@ import java.util.List;
 
 // Disjoint Set Union by Size with Path Compression
 class UnionBySize {
-    List<Integer> size = new ArrayList<>();
-    List<Integer> parent = new ArrayList<>();
+    public List<Integer> size = new ArrayList<>();
+    public List<Integer> parent = new ArrayList<>();
 
     public UnionBySize(int n) {
         for (int i = 0; i <= n; i++) {
@@ -17,7 +17,7 @@ class UnionBySize {
         }
     }
 
-    int findUParent(int node) {
+    public int findUParent(int node) {
         if (node == parent.get(node)) {
             return node;
         }
@@ -26,7 +26,7 @@ class UnionBySize {
         return uParent;
     }
 
-    void unionBySize(int u, int v) {
+    public void unionBySize(int u, int v) {
         int pu = findUParent(u);
         int pv = findUParent(v);
 
@@ -63,6 +63,8 @@ public class KruskalAlgorithm {
         int mstWeight = 0;
 
         UnionBySize ds = new UnionBySize(numNodes);
+        Collections.sort(edges, ( p1,  p2) -> Integer.compare(p1.first, p2.first));
+        List<Pair<Integer, Pair<Integer, Integer>>> list = new ArrayList<>();
 
         for (Pair<Integer, Pair<Integer, Integer>> edge : edges) {
             int u = edge.second.first;
@@ -72,6 +74,7 @@ public class KruskalAlgorithm {
             if (ds.findUParent(u) != ds.findUParent(v)) {
                 mstWeight += w;
                 ds.unionBySize(u, v);
+                list.add(edge);
             }
         }
 

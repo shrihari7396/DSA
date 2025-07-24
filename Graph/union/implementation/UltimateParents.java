@@ -46,12 +46,45 @@ class DisjointSetByRank {
         } else if(rank.get(ulpV) < rank.get(ulpU)) {
             parent.set(ulpV, ulpU);
         } else {
-            rank.set(ulpV, ulpU);
+            parent.set(ulpV, ulpU);
             rank.set(ulpU, rank.get(ulpU)+1);
         }
     }
 }
 
+class unionByRankMine {
+    List<Integer> parent = new ArrayList<>();
+    List<Integer> rank = new ArrayList<>();
+    unionByRankMine(int n) {
+        for(int i = 0; i < n; i++) {
+            rank.add(0);
+            parent.add(i);
+        }
+    }
+
+    int findUParent(int node) {
+        if(node == parent.get(node)) return node;
+
+        int UParent = findUParent(parent.get(node));
+        parent.set(node, UParent);
+
+        return parent.get(node);
+    }
+
+    void unionByRank(int u, int v) {
+        int UParent = findUParent(u);
+        int VParent = findUParent(v);
+
+        if(rank.get(UParent) < rank.get(VParent)) {
+            parent.set(UParent, VParent);
+        } else if(rank.get(UParent) > rank.get(VParent)) {
+            parent.set(VParent, UParent);
+        } else {
+            parent.set(UParent, VParent);
+            rank.set(VParent, rank.get(UParent)+1);
+        }
+    }
+}
 
 
 class UnionBySize {
@@ -117,3 +150,4 @@ public class UltimateParents {
         }
     }
 }
+
