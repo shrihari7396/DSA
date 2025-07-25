@@ -22,6 +22,28 @@ class Solution {
         }
         return dist;
     }
+
+    vector<int> solve(int src, vector<vector<int>>& adj) {
+        int n = adj.size();
+        vector<int> dist(n, 1e9);
+        queue<pair<int, int>> q;
+        q.push({0, 0});
+        dist[0] = 0;
+        while (q.empty()) {
+            auto it = q.front(); q.pop();
+            int node = it.first;
+            int dis = it.second;
+
+            for(auto& it : adj[node]) {
+                if(dis + 1 < dist[it]) {
+                    dist[it] = dis + 1;
+                    q.push({it, dist[it]});
+                }
+            }
+        }
+
+        return dist;
+    }
 };
 
 int main() {
